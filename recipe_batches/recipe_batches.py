@@ -3,17 +3,11 @@
 import math
 
 def recipe_batches(recipe, ingredients):
-  # assuming the keys of both parameters match up, check if there's enough ingredients to make at least 1 batch
-  # if there's not enough to make at least 1 batch, 0 batches can be made
-  # if there's enough ingredients for at least 1 batch, check how many batches in total can be made based on supplied ingredients amount
-  # if recipe.keys() != ingredients.keys():
-  #   return 0
-
   total_batches = 0
   temp_list = [] # will be used to check if at least 1 batch can be made or not
 
   # check if each of the keys that exist in recipe all exist in ingredients, if they don't, 0 batches can be created due to lack of proper ingredients
-  if all(key in ingredients.keys() for key in recipe.keys()): # NOTE: all() takes a single parameter, an interable. Not sure if this effects time complexity
+  if all(key in ingredients.keys() for key in recipe.keys()): # NOTE: all() takes a single parameter, an iterable. Not sure if this effects time complexity
     for key, value in ingredients.items():
       temp_list.append(value >= recipe.get(key))
 
@@ -21,11 +15,16 @@ def recipe_batches(recipe, ingredients):
     # if there isn't, return the current value of total_batches
     if all(temp_list) == False:
       return total_batches
+    else:
+      while all(temp_list) == True:
+        for key, value in recipe.items():
+          cur_ingredient = ingredients.get(key)
+          cur_ingredient -= value
+
+        total_batches += 1
 
   else:
     return total_batches
-
-  
 
 
 
